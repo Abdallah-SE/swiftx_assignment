@@ -8,9 +8,15 @@ footer, header, hgroup, menu, figure, figcaption, time, meter {
     outline: none;
     vertical-align: baseline;
 }
+.conatiner-details{
+  padding: 20px;
+  margin: 5px;
+  width: 600px;
+  height: 300px;
+}
 .table-conatiner  .head-table {
-  background-color: red;
   color: blue;
+  font-size: 35px;
   margin-left: 200px;
 }
 
@@ -20,6 +26,13 @@ p {
 th, td {
   border-style:solid;
   border-color: #96D4D4;
+}
+/*Header*/
+.head-text {
+  text-align: center;
+  font-size: 25px;
+  padding: 20px;
+  text-decoration: none;
 }
 /**Styling adding new user*/
 form.appForm {

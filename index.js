@@ -16,10 +16,11 @@ app.use(morgan('tiny'));                        ///log all request
 ///connect to mongoose
 connectDB();
 app.use(bodyParser.urlencoded({ extended: true }));   ////adding body parsers
-
-///Set the view engine
+//app.use(express.json())
+//// set the view engine to ejs
 app.set("view engine","ejs");
-///app.set("view",path.resolve(__dirname,"views/ejs"));
+
+//app.set("view",path.resolve(__dirname,"views/ejs"));
 //Load Assets
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")));//load css files
 app.use('/js', express.static(path.resolve(__dirname, "assets/js")));//load css files
@@ -28,6 +29,7 @@ app.use('/img', express.static(path.resolve(__dirname, "assets/img")));//load cs
 
 ///Load routers
 app.use('/', require('./server/routes/router.js'));
+
 ///Open connection to the server on port 5000
 
 app.listen(PORT, ()=>{

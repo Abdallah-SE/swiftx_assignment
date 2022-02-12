@@ -11,15 +11,18 @@ exports.create = (req,res)=>{
   }
   //create new user
   const user = new userDB({
-    user_name: req.body.name,
+    name: req.body.name,
     password: req.body.password,
     email: req.body.email,
     role: req.body.role
   });
 
   //Save the user data in the database
-  user.save().then(data=>{
-    res.send(data)
+user.save().then(data=>{
+    //res.send(data)///That's for test rest apis with postman
+    res.redirect("http://localhost:7000/user/view_user");
+    //res.writeHead(200, {"Location": "/view_user"});
+    return res.end();
   }).catch(err=>{
     res.status(500).send({message:err.message||'failded saving the user info'})
   });
@@ -45,24 +48,26 @@ exports.find = (req,res)=>{
     })
   }
 };
-///Update user by id
-exports.update = (req,res)=>{
-  if(!req.body){
-    return res.status(400).send({message: "no data found to be updated"})
-  }
-  const id = req.params.id;
-  userDB.findByIdAndUpdate(id, req.body,{useFindAndModify: false})
-  .then((data)=>{
-    if(!data){
-      res.status(404).send({message:`Can not update the user with id: ${id}`});
-    }else{
-      res.send(data);
+// Update a new idetified user by user id
+exports.update = (req, res)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
     }
-  }).catch(err=>{
-    res.status(500).send({message:"Error in updating the user"});
-  });
-};
-
+    const id = req.params.id;
+    userDB.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                res.send(data)
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
+}
 
 ////delete user
 exports.delete = (req,res)=>{

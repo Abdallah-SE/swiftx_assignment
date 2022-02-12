@@ -12,5 +12,16 @@ exports.view_user = (req,res)=> {
   });
 };
 exports.add_user = (req,res)=> {
+  //res.writeHead(200, {Location:"/view_user"});
+  //res.end();
   res.render('add_user');
+};
+exports.edit_user = (req,res)=> {
+  axios.get('http://localhost:7000/api/users', {params:{id: req.query.id}})
+  .then(function(user_data){
+    res.render('edit_user', {user:user_data.data});
+  }).catch(err=>{
+    res.send(err);
+  });
+  ///res.render('edit_user');that's just test for rest postman
 };
