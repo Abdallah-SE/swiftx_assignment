@@ -20,7 +20,7 @@ exports.create = (req,res)=>{
   //Save the user data in the database
 user.save().then(data=>{
     //res.send(data)///That's for test rest apis with postman
-    res.redirect("http://localhost:7000/user/view_user");
+    res.redirect("http://localhost:7000/view_user");
     //res.writeHead(200, {"Location": "/view_user"});
     return res.end();
   }).catch(err=>{
@@ -39,7 +39,7 @@ exports.find = (req,res)=>{
       }
     }).catch(err=>{
       res.status(500).send({message:"Error in find the user"});
-    });;
+    });
   }else{
     userDB.find().then(user=>{
       res.send(user)
@@ -61,6 +61,7 @@ exports.update = (req, res)=>{
             if(!data){
                 res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
             }else{
+
                 res.send(data)
             }
         })

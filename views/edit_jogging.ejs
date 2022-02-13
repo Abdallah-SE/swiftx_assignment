@@ -1,0 +1,23 @@
+<!--Include header file-->
+<%- include('include/_header')%>
+<form autocomplete="off" action="/api/jogs/:id" id="edit_jogging" class="appForm clearfix" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend>Edit The jogging</legend>
+        <input required type="hidden" name="id" id="id" maxlength="255" value="<%=jogs._id%>">
+        <div class="input_wrapper n90 border">
+            <label class="floated">Date</label>
+            <input required type="text" name="date" id="date" maxlength="100" value="<%=jogs.date%>" autocomplete="on">
+        </div>
+        <div class="input_wrapper n90 border">
+            <label class="floated">Distance</label>
+            <input required type="text" name="distance" id="distance" maxlength="50" value="<%=jogs.distance%>" autocomplete="on">
+        </div>
+        <div class="input_wrapper n90 border">
+            <label class="floated">Time</label>
+            <input required type="text" name="time" id="time" maxlength="100" value="<%=jogs.time%>" autocomplete="on">
+        </div>
+        <input style="text-align:center;float:center;" class="no_float" type="submit" id="edit" name="edit" value="edit">
+    </fieldset>
+</form>
+<!--Include footer file-->
+<%- include('include/_footer')%>

@@ -1,0 +1,37 @@
+<!--Include header file-->
+<%- include('include/_header')%>
+<h1>
+  <table style="width:90%">
+    <thead>
+      <p>The jogs information</p>
+      <a href="/add_jogging" class="btn btn-xs btn-default">Add New jogging<span class="glyphicon glyphicon-edit"></span></a>
+    </thead>
+    <tbody>
+    <tr>
+      <th>Numbering</th>
+      <th>Date</th>
+      <th>Distance</th>
+      <th>Time</th>
+      <th>Action</th>
+    </tr>
+  <%for(let i=0;i<jogs.length;i++){%>
+  <tr>
+    <td><%=i+1%></td>
+    <td><%=jogs[i].date%></td>
+    <td><%=jogs[i].distance%></td>
+    <td><%=jogs[i].time%></td>
+    <td>
+      <a href="/edit_jogging?id=<%= jogs[i]._id%>" class="btn btn-xs btn-default"><i class='fa fa-edit' style='font-size:38px;color:blue'></i></a>
+      <a class="deletebtnjog" data-id="<%= jogs[i]._id%>"><i class="fa fa-trash-o" style="font-size:48px;color:red;cursor: no-drop;"></i> </a>
+
+
+
+    </td>
+  </tr>
+  <%}%>
+  </tbody>
+
+  </table>
+</h1>
+<!--Include footer file-->
+<%- include('include/_footer')%>

@@ -1,0 +1,22 @@
+<!--Include header file-->
+<%- include('include/_header')%>
+<form autocomplete="off" action="/api/jogs" id="add_jogging" class="appForm clearfix" method="post" enctype="application/x-www-form-urlencoded">
+    <fieldset>
+        <legend>Create new jogging</legend>
+        <div class="input_wrapper n90 border">
+            <label class="floated">Date</label>
+            <input required type="text" name="date" id="date" maxlength="100" value="" autocomplete="on">
+        </div>
+        <div class="input_wrapper n90 border">
+            <label class="floated">Distance</label>
+            <input required type="number" name="distance" id="distance" maxlength="60" value="" autocomplete="on">
+        </div>
+        <div class="input_wrapper n90 border">
+            <label class="floated">Time</label>
+            <input required type="text" name="time" id="time" maxlength="100" value="" autocomplete="on">
+        </div>
+        <input style="text-align:center;float:center;" class="no_float" type="submit" name="submit" value="Save" autocomplete="on">
+    </fieldset>
+</form>
+<!--Include footer file-->
+<%- include('include/_footer')%>

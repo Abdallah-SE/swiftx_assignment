@@ -18,6 +18,7 @@ $("#edit_user").submit(function(event){
 
     $.ajax(request).done(function(response){
         alert("Data Updated Successfully!");
+        window.location.href='http://localhost:7000/view_user';
     })
 })
 

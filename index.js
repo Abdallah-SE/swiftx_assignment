@@ -29,6 +29,8 @@ app.use('/img', express.static(path.resolve(__dirname, "assets/img")));//load cs
 
 ///Load routers
 app.use('/', require('./server/routes/router.js'));
+app.use('/', require('./server/routes/router_jogging.js'));
+//app.use('/', require('./server/routes/jogging_route.js'));
 
 ///Open connection to the server on port 5000
 
