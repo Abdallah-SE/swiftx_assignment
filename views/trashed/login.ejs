@@ -1,0 +1,29 @@
+<!--Include header file-->
+<%- include('include/_header')%>
+<div class="action_view login">
+    <!--<?php $messages = $this->messeger->getMessages(); if(!empty($messages)): foreach ($messages as $message) :?>
+    <p class="message t<?= $message[1]?>">
+        <?= $message[0]?><a href="" class="closeBtn"><i class="fa fa-times-circle"></i></a>
+    </p>
+    <?php  endforeach; endif;?>-->
+    <div class="login_box animate">
+        <form action="login" autocomplete="on" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="border"></div>
+            <h1>The login page</h1>
+            <ul>
+      <% if(messages.success_msg) { %>
+      <li><%= messages.success_msg %></li>
+      <% } %>
+    </ul>
+            <img src="/img/login-icon.png" width="120">
+            <div class="input_wrapper useremail">
+                <input  autocomplete="on" required type="email" name="email" id="email" maxlength="100" placeholder="Please Enter Your Email">
+            </div>
+            <div class="input_wrapper password">
+                <input  autocomplete="on" required type="password" id="ucpwd" name="password" maxlength="100" placeholder="Please Enter Your Password">
+            </div>
+            <input type="submit" name="login" value="Login">
+        </form>
+    </div>
+</div>
+<%- include('include/_footer')%>

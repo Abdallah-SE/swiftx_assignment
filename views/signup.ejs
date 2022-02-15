@@ -1,0 +1,38 @@
+<!--Include header file-->
+<%- include('include/_header')%>
+<div class="action_view signup">
+    <!--<?php $messages = $this->messeger->getMessages(); if(!empty($messages)): foreach ($messages as $message) :?>
+    <p class="message t<?= $message[1]?>">
+        <?= $message[0]?><a href="" class="closeBtn"><i class="fa fa-times-circle"></i></a>
+    </p>
+    <?php  endforeach; endif;?>-->
+    <div class="signup_box animate">
+        <form action="signup" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="border"></div>
+            <h1>The SignUp page</h1>
+            <div><table>
+              <% if(typeof errors != 'undefined'){ %>
+
+  <% for(var i=0; i < errors.length; i++) { %>
+     <tr>
+       <td style="color:red;"><%= errors[i] %></td>
+     </tr>
+  <% } %>
+                <% }%>
+                </table>
+            </div>
+            <img src="/img/login-icon.png" width="120">
+            <div class="input_wrapper username">
+                <input autocomplete="on" required type="text" name="name" id="username" maxlength="50" placeholder="Please Enter Your User Name">
+            </div>
+            <div class="input_wrapper useremail">
+                <input autocomplete="on" required type="email" name="email" id="email" maxlength="100" placeholder="Please Enter Your Email">
+            </div>
+            <div class="input_wrapper password">
+                <input autocomplete="on" required type="password" id="ucpwd" name="password" maxlength="100" placeholder="Please Enter Your Password">
+            </div>
+            <input type="submit" name="signup" value="signup">
+        </form>
+    </div>
+</div>
+<%- include('include/_footer')%>

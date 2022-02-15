@@ -8,22 +8,29 @@ const render_jogs = require('../services/render_jogs.js');
 app.use(bodyParser.json())
 let joggingDB = require('../model/jogging.js');
 
+const passport = require("passport");
+const auth_route = express.Router();
+const {
+  checkAuthenticated,
+  checkNotAuthenticated,
+} = require("../routes/auth-meth.js");
+
 
 
 const jogging_controller = require('../controller/jogging_controller.js');
 
 
-route.get('/view_jogging', render_jogs.view_jogging);
+route.get('/view_jogging',checkAuthenticated, render_jogs.view_jogging);
 /*
 *@description: create new jogging for jogging page after request
 *@method : get
 */
-route.get('/add_jogging', render_jogs.add_jogging);
+route.get('/add_jogging',checkAuthenticated, render_jogs.add_jogging);
 /*
 *@description: Edit an existing account for the user - after request
 *@method : get
 */
-route.get('/edit_jogging', render_jogs.edit_jogging);
+route.get('/edit_jogging',checkAuthenticated, render_jogs.edit_jogging);
 
 ////apis
 route.post('/api/jogs', jogging_controller.create);
