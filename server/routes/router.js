@@ -54,13 +54,6 @@ route.get('/add_user', authRole,services.add_user);
 *@method : get
 */
 route.get('/edit_user', authRole, services.edit_user);
-//route.get('/login', services.getLogin);
-//route.get('/signup', services.getSignUp);
-
-//route.get('/login', authController.getLogin);
-
-//route.post('/login',services.postLogin);
-//route.post('/signup',services.postSignUp);
 
 ////apis
 route.post('/api/users', user_controller.create);
@@ -68,13 +61,5 @@ route.get('/api/users', user_controller.find);
 route.put('/api/users/:id', user_controller.update);
 route.delete('/api/users/:id', authRole, user_controller.delete);
 
-
-//////Login and register user
-
-///Route the login page
-//route.get("/login",services.login);
-///Route the signup page
-//route.get("/signup",services.signup);
-///Make the router.js file available to exports
 
 module.exports = route;
