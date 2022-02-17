@@ -3,7 +3,15 @@
 <h1>
   <table style="width:90%">
     <thead>
-      <p>The user information</p>
+      <p>The user information
+      </p>
+      <div class="error_class">
+      <ul>
+        <% if(messages.auth_msg) { %>
+        <li style="color:red;font-size:35px;"><%= messages.auth_msg %></li>
+        <% } %>
+      </ul>
+      </div>
       <a href="/add_user" class="btn btn-xs btn-default">Add New User<span class="glyphicon glyphicon-edit"></span></a>
     </thead>
     <tbody>

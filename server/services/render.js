@@ -11,6 +11,8 @@ const auth_route = express.Router();
 const {
   checkAuthenticated,
   checkNotAuthenticated,
+  authRole,
+  isAdmin,
 } = require("../routes/auth-meth.js");
 
 /*route.get("/", checkAuthenticated, (req, res) => {

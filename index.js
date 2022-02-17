@@ -8,14 +8,15 @@ const bodyParser = require('body-parser')   ///Parse incoming request bodies in 
 const path = require('path');              ////Require path utility module
 dotenv.config({ path: './config/config.env' }); ///load and reference .env file
 const PORT = process.env.PORT || 5000;          ////Set the port value
-app.use(bodyParser.urlencoded({ extended: true }));   ////adding body parsers
+//app.use(bodyParser.urlencoded({ extended: true }));   ////adding body parsers
 /////////////////////////////////////////////////////start auth
 //const dotenv = require('dotenv');    /// Loads environment variables from .env file
 dotenv.config({ path: './config/.env' }); ///load and reference .env file
 //const express = require("express");
 //const app = express();
 //const path = require('path');              ////Require path utility module
-
+//set global errors variable
+app.locals.errors=null;
 //const mongoose = require("mongoose");
 //const passport = require("passport");
 const flash = require("express-flash");
@@ -38,6 +39,8 @@ initializePassport(
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(flash());
 app.use(
   session({
@@ -65,6 +68,10 @@ app.use('/img', express.static(path.resolve(__dirname, "assets/img")));//load cs
 
 //app.use('/', require('./server/routes/jogging_route.js'));
 ///Open connection to the server on port 5000
+app.get('*',async function(req,res,next){
+  res.locals.user=req.user||null;
+  next();
+})
 
 app.use('/', require('./server/routes/auth.js'));
 ///Load routers

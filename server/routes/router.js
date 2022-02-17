@@ -13,6 +13,8 @@ const auth_route = express.Router();
 const {
   checkAuthenticated,
   checkNotAuthenticated,
+  authRole,
+  isAdmin,
 } = require("../routes/auth-meth.js");
 
 
@@ -27,7 +29,11 @@ const user_controller = require('../controller/user_controller.js');
 
 
 
-
+const roles = {
+  admin: 'role.admin',
+  manager: 'role.manager',
+  regular: 'role.regular'
+}
 /*
 *@description: Root Router get response to the main home page after request
 *@method : get
@@ -37,17 +43,17 @@ const user_controller = require('../controller/user_controller.js');
 *@description: display the users' details page after request
 *@method : get
 */
-route.get('/view_user', checkAuthenticated, services.view_user);
+route.get('/view_user',  authRole,services.view_user);
 /*
 *@description: create new account for user page after request
 *@method : get
 */
-route.get('/add_user',checkAuthenticated, services.add_user);
+route.get('/add_user', authRole,services.add_user);
 /*
 *@description: Edit an existing account for the user - after request
 *@method : get
 */
-route.get('/edit_user', checkAuthenticated, services.edit_user);
+route.get('/edit_user', authRole, services.edit_user);
 //route.get('/login', services.getLogin);
 //route.get('/signup', services.getSignUp);
 
@@ -60,7 +66,7 @@ route.get('/edit_user', checkAuthenticated, services.edit_user);
 route.post('/api/users', user_controller.create);
 route.get('/api/users', user_controller.find);
 route.put('/api/users/:id', user_controller.update);
-route.delete('/api/users/:id', user_controller.delete);
+route.delete('/api/users/:id', authRole, user_controller.delete);
 
 
 //////Login and register user

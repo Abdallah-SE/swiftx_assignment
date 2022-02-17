@@ -7,15 +7,30 @@
 <div class="user_container conatiner-details">
   <div class="user_details">
 
-    <div>
-      <% if(typeof user != 'undefined'){ %>
-    <%= user%>
-        <% }%>    </div>
-            <h1>Hello <%= name%></h1>
-        <form action="/logout?_method=DELETE" method="POST">
-      <button type="submit">LOGOUT</button>
-    </form>
+    <div class="error_class">
+    <ul>
+      <% if(messages.auth_msg) { %>
+      <li style="color:red;font-size:35px;"><%= messages.auth_msg %></li>
+      <% } %>
+    </ul>
+    </div>
+            <h1>The account of <%= user_info.name%></h1>
+            <div>
+              <div>
+                <table>
 
+         <tr>
+           <td style="color:blue;">id: <%= user_info._id %></td>
+           <td style="color:blue;">Name: <%= user_info.name %></td>
+           <td style="color:blue;">Email: <%= user_info.email %></td>
+           <td style="color:blue;">Role: <%= user_info.role %></td>
+           <td><form action="/logout?_method=DELETE" method="POST">
+         <button style="color:red" type="submit">LOGOUT</button>
+       </form></td>
+         </tr>
+                    </table>
+              </div>
+            </div>
     <table class="table-conatiner">
       <th class="head-table">
         <a href="/view_user">Users details</a>

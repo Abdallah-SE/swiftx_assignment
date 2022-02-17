@@ -8,10 +8,11 @@ const auth_route = express.Router();const axios = require('axios');   ///Promise
 const {
   checkAuthenticated,
   checkNotAuthenticated,
+  authRole,
 } = require("./auth-meth.js");
 
 auth_route.get("/", checkAuthenticated, (req, res) => {
-  res.render("index", { name: req.user.name });
+  res.render("index", { user_info:req.user });
 });
 
 auth_route.get("/register", checkNotAuthenticated, (req, res) => {
@@ -45,7 +46,7 @@ auth_route.post("/register", checkNotAuthenticated, async (req, res) => {
         name: req.body.name,
         password: hashedPassword,
         email: req.body.email,
-        role: 'regular_user',
+        role: 'role.regular',
       });
 
       await user.save();
@@ -62,13 +63,5 @@ auth_route.delete("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-auth_route.get('/view_user',checkAuthenticated, (req,res)=> {
-  ////get the api
-  axios.get('http://localhost:7000/api/users').then(function(response){
-    res.render('view_user',{users:response.data});
-  }).catch(err=>{
-    console.log(err+"Error in loading users");
-    res.send(err+"Error in loading users");
-  });
-});
+
 module.exports = auth_route;

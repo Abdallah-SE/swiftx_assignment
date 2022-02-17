@@ -20,6 +20,7 @@ $("#edit_user").submit(function(event){
         alert("Data Updated Successfully!");
         window.location.href='http://localhost:7000/view_user';
     })
+    
 })
 
 
@@ -34,6 +35,9 @@ $('.deletebtn').click(function() {
             alert("Data Deleted Successfully!");
             location.reload();
         })
+        $.ajax(request).fail(function() { alert('request failed');
+        window.location.href='http://localhost:7000/view_user';
+      });
     }
     //console.log(request);
 });
@@ -60,6 +64,8 @@ if(window.location.pathname == "/"){
                 alert("Data Deleted Successfully!");
                 location.reload();
             })
+        }else{
+          window.location.href='http://localhost:7000/view_user';
         }
 
     })
