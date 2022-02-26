@@ -1,6 +1,6 @@
 <!--Include header file-->
 <%- include('include/_header')%>
-<form autocomplete="off" action="/api/users/:id" id="edit_user" class="appForm clearfix" method="post" enctype="application/x-www-form-urlencoded">
+<form autocomplete="off" action="/display_users" id="edit_user" class="appForm clearfix" method="post" enctype="application/x-www-form-urlencoded">
     <fieldset>
         <legend>Edit The account</legend>
         <input required type="hidden" name="id" id="id" maxlength="255" value="<%=user._id%>">

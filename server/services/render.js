@@ -2,6 +2,7 @@ const axios = require('axios');   ///Promise based HTTP client for the browser a
 const dotenv = require('dotenv');    /// Loads environment variables from .env file
 const express = require('express');  // Import to the module of express js
 const app = express();
+const qs = require('qs');
 dotenv.config({ path: './config/config.env' }); ///load and reference .env file
 let userDB = require('../model/user.js');
 const bcrypt = require('bcrypt');  // Import to the module of express js
@@ -33,13 +34,15 @@ exports.view_user = (req,res)=> {
   });
 };
 exports.add_user =  (req,res)=> {
-  //res.writeHead(200, {Location:"/view_user"});
-  //res.end();
   res.render('add_user');
 };
-exports.edit_user =  (req,res)=> {
-  axios.get('http://localhost:7000/api/users', {params:{id: req.query.id}})
+exports.edit_user =  async (req,res)=> {
+  console.log('req.query.id');
+  console.log(req.query.id);
+  await axios.get('http://localhost:7000/api/users', {params:{id: req.query.id}})
   .then(function(user_data){
+    console.log('user_data.data');
+    console.log(user_data.data);
     res.render('edit_user', {user:user_data.data});
   }).catch(err=>{
     res.send(err);

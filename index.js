@@ -2,6 +2,8 @@ const express = require('express');  // Import to the module of express js
 const dotenv = require('dotenv');    /// Loads environment variables from .env file
 const app = express();               /// Reference for the express
 const passport = require('passport');
+const router = express.Router();     //////Create instance of middleware and routes
+var cors = require('cors')
 
 const morgan = require('morgan');    ////Create a new morgan logger middleware function
 const bodyParser = require('body-parser')   ///Parse incoming request bodies in a middleware
@@ -21,6 +23,8 @@ app.locals.errors=null;
 //const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
+
 const methodOverride = require("method-override");
 const user = require("./server/model/user");
 
@@ -38,15 +42,19 @@ initializePassport(
 );
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24
 app.use(flash());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: oneDay },
+    resave: false,
+    secure: false,
   })
 );
 app.use(passport.initialize());
@@ -55,11 +63,13 @@ app.use(methodOverride("_method"));
 //////////////////////////////////////////////////////end auth
 app.use(morgan('tiny'));                        ///log all request
 
+
 //app.use(express.json())
 //// set the view engine to ejs
 app.set("view engine","ejs");
-//app.set('views', 'views');
+app.set('views', 'views');
 //app.set("view",path.resolve(__dirname,"views/ejs"));
+app.use('/assets', express.static(__dirname + '/assets'))
 
 //Load Assets
 app.use('/css', express.static(path.resolve(__dirname, "assets/css")));//load css files
@@ -73,15 +83,15 @@ app.get('*',async function(req,res,next){
   next();
 })
 
-app.use('/', require('./server/routes/auth.js'));
-///Load routers
-app.use('/', require('./server/routes/router.js'));
-app.use('/', require('./server/routes/router_jogging.js'));
-
 ///load db connnection file of mongoose
 const connectDB = require('./server/database/connect.js');
 ///connect to mongoose
 connectDB();
+///Load routers
+
+app.use(require('./server/routes/auth.js'));
+app.use('/', require('./server/routes/router_jogging.js'));
+app.use('/', require('./server/routes/router.js'));
 
 app.listen(PORT, ()=>{
   console.log(`Now your server is running on port: ${PORT}`);

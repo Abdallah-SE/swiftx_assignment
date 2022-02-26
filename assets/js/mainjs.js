@@ -1,9 +1,6 @@
-
 $("#edit_user").submit(function(event){
     event.preventDefault();
-
     var unindexed_array = $(this).serializeArray();
-
     var data = {}
 
     $.map(unindexed_array, function(n, i){
@@ -18,9 +15,12 @@ $("#edit_user").submit(function(event){
 
     $.ajax(request).done(function(response){
         alert("Data Updated Successfully!");
-        window.location.href='http://localhost:7000/view_user';
+        window.location.href='http://localhost:7000/display_users';
     })
-    
+    $.ajax(request).fail(function() { alert('Update request failed');
+    window.location.href='http://localhost:7000/display_users';
+  });
+
 })
 
 
@@ -33,11 +33,12 @@ $('.deletebtn').click(function() {
     if(confirm("Do you really want to delete this record?")){
         $.ajax(request).done(function(response){
             alert("Data Deleted Successfully!");
+            window.location.href='http://localhost:7000/display_users';
             location.reload();
         })
-        $.ajax(request).fail(function() { alert('request failed');
-        window.location.href='http://localhost:7000/view_user';
-      });
+        //$.ajax(request).fail(function() { alert('request failed');
+        //window.location.href='http://localhost:7000/display_users';
+      //});
     }
     //console.log(request);
 });

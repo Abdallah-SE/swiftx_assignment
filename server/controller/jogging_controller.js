@@ -40,7 +40,7 @@ exports.find = (req,res)=>{
       res.status(500).send({message:"Error in find the jogging"});
     });;
   }else{
-    joggingDB.find().then(jogs=>{
+    joggingDB.find().sort({date:-1}).then(jogs=>{
       console.log(jogs);
       res.send(jogs)
     }).catch(err=>{
