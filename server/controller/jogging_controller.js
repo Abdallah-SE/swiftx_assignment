@@ -1,22 +1,18 @@
-////userDB
-///import user model
-let joggingDB = require('../model/jogging.js');
-
-///Create a new user
+let joggingDB = require('../model/jogging.js');///import jogging model
+///Create a new jogging
 exports.create = (req,res)=>{
-  ///Validate the input
+  ///Check if the request body is not set
   if(!req.body){
     res.status(400).send({message:"The jogging data not found"});
     return;
   }
-  //create new user
+  //create new jogging
   const jogging = new joggingDB({
     date: req.body.date,
     distance: req.body.distance,
     time: req.body.time
   });
-
-  //Save the user data in the database
+  //Save the jogging data in the database if every thing is good
 jogging.save().then(data=>{
     //res.send(data)///That's for test rest apis with postman
     res.redirect("http://localhost:7000/view_jogging");
@@ -26,7 +22,7 @@ jogging.save().then(data=>{
     res.status(500).send({message:err.message+' Error in saving jogging'||'failded saving the jogging info'})
   });
 };
-///View all users or single user
+///View all jogging filter by date
 exports.find = (req,res)=>{
   if(req.query.id){
     const id = req.query.id;
@@ -48,7 +44,7 @@ exports.find = (req,res)=>{
     })
   }
 };
-// Update a new idetified user by user id
+// Update jogging info by id
 exports.update = (req, res)=>{
     if(!req.body){
         return res
@@ -70,7 +66,7 @@ exports.update = (req, res)=>{
         })
 }
 
-////delete user
+////delete jogging by id
 exports.delete = (req,res)=>{
   const id = req.params.id;
   joggingDB.findByIdAndRemove(id).then(data=>{
