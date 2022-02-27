@@ -7,95 +7,7 @@ const {
   allowedUsers,
 } = require("../routes/auth-meth.js");
 
-///Create a new user
-exports.create = (req,res)=>{
-  ///check  the body request is empty
-  if(!req.body){
-    res.status(400).send({message:"user content not found"});
-    return;
-  }
-  //create new user
-  const user = new userDB({
-    name: req.body.name,
-    password: req.body.password,
-    email: req.body.email,
-    role: req.body.role
-  });
 
-  //Save the user data in the database
-user.save().then(data=>{
-     res.send(data)///That's for test rest apis with postman
-    //res.redirect("http://localhost:7000/view_user");
-    //res.writeHead(200, {"Location": "/view_user"});
-    return res.end();
-  }).catch(err=>{
-    res.status(500).send({message:err.message||'failded saving the user info'})
-  });
-};
-///View all users or single user
-exports.find = (req,res)=>{
-  if(req.query.id){
-    const id = req.query.id;
-    userDB.findById(id).then(data=>{
-      if(!data){
-        res.status(404).send({message:'Error no user info found!'})
-      }else{
-        res.send(data)
-      }
-    }).catch(err=>{
-      res.status(500).send({message:"Error in find the user"});
-    });
-  }else{
-    userDB.find().then(user=>{
-      res.send(user)
-    }).catch(err=>{
-      res.status(500).send({message:err.message|| 'Error while view user info'})
-    })
-  }
-};
-
-
-////delete user
-exports.delete = (req,res)=>{
-  const id = req.params.id;
-  if(req.user.role ==='role.admin'){
-    userDB.findByIdAndRemove(id).then(data=>{
-
-      if(!data){
-        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
-      }else{
-        req.flash('updatemsg', 'User hase been successfully deleted!');
-        res.render('/display_users');
-        res.send({message:`Successfully deleting user of id: ${id}`});
-      }
-      req.flash('deletemsg', 'User hase been successfully deleted!');
-      res.render('/display_users');
-    }).catch(err=>{
-      res.status(500).send({message:"Error during the deleting operation!"})
-    });
-  }else if(req.user.role ==='role.manager'){
-    userDB.findByIdAndRemove(id).then(data=>{
-      if(!data){
-        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
-      }else{
-        res.send({message:`Successfully deleting user of id: ${id}`});
-      }
-    }).catch(err=>{
-      res.status(500).send({message:"Error during the deleting operation!"})
-    });
-  }else if(req.user.id === id){
-    userDB.findByIdAndRemove(id).then(data=>{
-      if(!data){
-        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
-      }else{
-        res.send({message:`Successfully deleting user of id: ${id}`});
-        res.render('/display_users');
-      }
-    }).catch(err=>{
-      res.status(500).send({message:"Error during the deleting operation!"})
-    });
-  }
-};
 //////
 exports.auth_find = (req,res)=>{
   userDB.find().then(usersmodel=>{
@@ -106,7 +18,7 @@ exports.auth_find = (req,res)=>{
   })
 
 }
-//////
+////// create new user
 exports.auth_create = (req,res)=>{
   if(!req.body){
     res.status(400).send({message:"user content not found"});
@@ -197,7 +109,96 @@ exports.auth_update = (req, res)=>{
   }
 
 }
-// Delete a user with specified user id in the request
+////delete user
+exports.delete = (req,res)=>{
+  const id = req.params.id;
+  if(req.user.role ==='role.admin'){
+    userDB.findByIdAndRemove(id).then(data=>{
+
+      if(!data){
+        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
+      }else{
+        req.flash('updatemsg', 'User hase been successfully deleted!');
+        res.render('/display_users');
+        res.send({message:`Successfully deleting user of id: ${id}`});
+      }
+      req.flash('deletemsg', 'User hase been successfully deleted!');
+      res.render('/display_users');
+    }).catch(err=>{
+      res.status(500).send({message:"Error during the deleting operation!"})
+    });
+  }else if(req.user.role ==='role.manager'){
+    userDB.findByIdAndRemove(id).then(data=>{
+      if(!data){
+        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
+      }else{
+        res.send({message:`Successfully deleting user of id: ${id}`});
+      }
+    }).catch(err=>{
+      res.status(500).send({message:"Error during the deleting operation!"})
+    });
+  }else if(req.user.id === id){
+    userDB.findByIdAndRemove(id).then(data=>{
+      if(!data){
+        res.status(404).send({message:`Sorry can not delete this user with id: ${id}`})
+      }else{
+        res.send({message:`Successfully deleting user of id: ${id}`});
+        res.render('/display_users');
+      }
+    }).catch(err=>{
+      res.status(500).send({message:"Error during the deleting operation!"})
+    });
+  }
+};
+//////////////////for postman rest api platform/////////////////////
+///Create a new user that's for postman rest api platform
+exports.create = (req,res)=>{
+  ///check  the body request is empty
+  if(!req.body){
+    res.status(400).send({message:"user content not found"});
+    return;
+  }
+  //create new user
+  const user = new userDB({
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email,
+    role: req.body.role
+  });
+
+  //Save the user data in the database
+user.save().then(data=>{
+     res.send(data)///That's for test rest apis with postman
+    //res.redirect("http://localhost:7000/view_user");
+    //res.writeHead(200, {"Location": "/view_user"});
+    return res.end();
+  }).catch(err=>{
+    res.status(500).send({message:err.message||'failded saving the user info'})
+  });
+};
+///View all users or single user that's for postman rest api platform
+exports.find = (req,res)=>{
+  if(req.query.id){
+    const id = req.query.id;
+    userDB.findById(id).then(data=>{
+      if(!data){
+        res.status(404).send({message:'Error no user info found!'})
+      }else{
+        res.send(data)
+      }
+    }).catch(err=>{
+      res.status(500).send({message:"Error in find the user"});
+    });
+  }else{
+    userDB.find().then(user=>{
+      res.send(user)
+    }).catch(err=>{
+      res.status(500).send({message:err.message|| 'Error while view user info'})
+    })
+  }
+};
+
+// Delete a user with specified user id in the request that's for postman rest api platform
 exports.deletepostman = (req, res)=>{
     const id = req.params.id;
 
