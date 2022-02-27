@@ -1,33 +1,26 @@
 const express = require('express');  // Import to the module of express js
 const dotenv = require('dotenv');    /// Loads environment variables from .env file
 const app = express();               /// Reference for the express
-const passport = require('passport');
+const passport = require('passport');////Reference to simple authenticating passport module
 const router = express.Router();     //////Create instance of middleware and routes
-var cors = require('cors')
 
 const morgan = require('morgan');    ////Create a new morgan logger middleware function
 const bodyParser = require('body-parser')   ///Parse incoming request bodies in a middleware
 const path = require('path');              ////Require path utility module
 dotenv.config({ path: './config/config.env' }); ///load and reference .env file
 const PORT = process.env.PORT || 5000;          ////Set the port value
-//app.use(bodyParser.urlencoded({ extended: true }));   ////adding body parsers
-/////////////////////////////////////////////////////start auth
-//const dotenv = require('dotenv');    /// Loads environment variables from .env file
+
 dotenv.config({ path: './config/.env' }); ///load and reference .env file
-//const express = require("express");
-//const app = express();
-//const path = require('path');              ////Require path utility module
-//set global errors variable
-app.locals.errors=null;
-//const mongoose = require("mongoose");
-//const passport = require("passport");
-const flash = require("express-flash");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
 
-const methodOverride = require("method-override");
-const user = require("./server/model/user");
+app.locals.errors=null;                     ////////Global error argument
 
+const flash = require("express-flash"); //Flash module to display messages
+const session = require("express-session");/////Express session handler
+const cookieParser = require("cookie-parser");//////Parse HTTP request cookies
+
+const methodOverride = require("method-override");////Override HTTP verbs
+const user = require("./server/model/user");////Require user model
+////initialize passport lib to set users data in the request
 const initializePassport = require("./config/passport-config");
 initializePassport(
   passport,
@@ -41,7 +34,7 @@ initializePassport(
   }
 );
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs");///Set ejs simple templating language to generate HTML markup with plain JavaScript
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -96,5 +89,4 @@ app.use('/', require('./server/routes/router.js'));
 app.listen(PORT, ()=>{
   console.log(`Now your server is running on port: ${PORT}`);
 });
-
 ////////////to run the nodemon -> npm start
