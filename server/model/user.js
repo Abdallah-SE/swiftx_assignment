@@ -1,5 +1,5 @@
-let mongoose = require('mongoose');
-
+let mongoose = require('mongoose');////import js oop lib  creates a connection between MongoDB and the Express web application
+////define user document schema inside mongoDB when created it
 let UserSchema = new mongoose.Schema({
   name:{
     type:String,
@@ -28,5 +28,5 @@ let UserSchema = new mongoose.Schema({
   }
 });
 
-const userDB = mongoose.model('user', UserSchema);
-module.exports = userDB;
+const userDB = mongoose.model('user', UserSchema);////Compiles a model for user
+module.exports = userDB;                          ///////To export this file easly
